@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Top of Capital // League App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'game-bg': '#0f172a',
+              'felt': '#054a29',
+              'felt-light': '#0a6c3e',
+              'felt-dark': '#022c18',
+              'wood': '#5d4037',
+              'chalk': '#29b6f6',
+              'cue': '#d7ccc8',
+              'billiard-red': '#e53935',
+              'billiard-yellow': '#ffb300',
+              'billiard-black': '#212121',
+              'surface': '#1e293b',
+            },
+            fontFamily: {
+              sans: ['"Roboto"', 'sans-serif'],
+              display: ['"Russo One"', 'sans-serif'],
+            },
+            boxShadow: {
+              'glossy': 'inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 0 rgba(0,0,0,0.3)',
+              'glossy-pressed': 'inset 0 4px 8px rgba(0,0,0,0.4)',
+              'card': '0 8px 16px rgba(0,0,0,0.4)',
+            },
+            backgroundImage: {
+              'felt-texture': "url('https://www.transparenttextures.com/patterns/felt.png')",
+              'carbon': "url('https://www.transparenttextures.com/patterns/carbon-fibre.png')",
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        background-color: #0f172a;
+        color: #fff;
+        overscroll-behavior: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .text-outline { text-shadow: 2px 2px 0 #000; }
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: #0f172a; }
+      ::-webkit-scrollbar-thumb { background: #054a29; border-radius: 3px; }
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    </style>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

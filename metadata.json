@@ -1,0 +1,7 @@
+{
+  "name": "FinalTOC",
+  "description": "The ultimate billiards competition app. Track stats, challenge rivals, and level up.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

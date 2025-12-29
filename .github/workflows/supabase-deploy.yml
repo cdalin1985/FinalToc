@@ -1,0 +1,50 @@
+name: Supabase Deploy (STAGING)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    name: Deploy to Supabase (STAGING)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install supabase CLI
+        run: npm install -g supabase
+
+      - name: Configure supabase auth token
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          echo "Supabase access token loaded"
+
+      - name: Run SQL migrations
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: |
+          supabase db query --project-ref $SUPABASE_PROJECT_REF --file migrations/001_create_challenge_proposals.sql
+          supabase db query --project-ref $SUPABASE_PROJECT_REF --file migrations/002_update_challenges_add_fields.sql
+          supabase db query --project-ref $SUPABASE_PROJECT_REF --file migrations/003_feed_triggers_rls.sql
+
+      - name: Deploy Edge Functions
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: |
+          supabase functions deploy create_challenge --project-ref $SUPABASE_PROJECT_REF --no-verify-jwt || true
+          supabase functions deploy propose_logistics --project-ref $SUPABASE_PROJECT_REF --no-verify-jwt || true
+          supabase functions deploy confirm_challenge --project-ref $SUPABASE_PROJECT_REF --no-verify-jwt || true
+          supabase functions deploy generate_avatar_nanobanana --project-ref $SUPABASE_PROJECT_REF --no-verify-jwt || true
+
+      - name: Post-deploy note
+        run: |
+          echo "Deployment finished. Please ensure the following Secrets are set in your Supabase project environment or via supabase secrets: SUPABASE_SERVICE_ROLE_KEY, NANOBANANA_API_KEY, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, LIVEPEER_API_KEY"
+

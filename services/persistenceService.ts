@@ -1,6 +1,6 @@
 import { User, Challenge, FeedItem, Match } from '../types';
 import { supabase } from './supabaseClient';
-import { INITIAL_ROSTER, INITIAL_FEED } from './mockData';
+import { INITIAL_ROSTER, INITIAL_FEED, INITIAL_MATCHES } from './mockData';
 
 // --- Initialization ---
 
@@ -44,9 +44,9 @@ export const getUsers = async (): Promise<User[]> => {
     .select('*')
     .order('rank', { ascending: true });
   
-  if (error) {
-      console.error("Error fetching users:", error);
-      return [];
+  if (error || !data || data.length === 0) {
+      // console.error("Error fetching users (falling back to mock):", error);
+      return INITIAL_ROSTER;
   }
   return data as User[];
 };
@@ -189,7 +189,9 @@ export const getFeed = async (): Promise<FeedItem[]> => {
     .select('*')
     .order('created_at', { ascending: false });
 
-  if (error) return [];
+  if (error || !data || data.length === 0) {
+      return INITIAL_FEED;
+  }
   
   // Transform DB rows to Types
   // We map 'user_data' (DB column) back to 'user' (App type)
@@ -219,5 +221,5 @@ export const addFeedItem = async (item: FeedItem) => {
 
 export const getMatches = async (): Promise<Match[]> => {
    // Assuming simple table for now
-   return [];
+   return INITIAL_MATCHES;
 }

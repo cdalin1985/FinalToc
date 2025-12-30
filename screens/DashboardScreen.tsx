@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { User, Challenge } from '../types';
 import { TrendingUp, Trophy, Play, Star, ListOrdered, MessageSquare, Activity, BellRing, Clock, CheckCircle } from 'lucide-react';
 import { Button } from '../components/Button';
+import { DailyQuest } from '../components/DailyQuest';
 import { getUserActionItems, getUsers } from '../services/persistenceService';
 
 interface DashboardScreenProps {
@@ -109,6 +110,9 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ currentUser, o
         </button>
       </div>
       
+      {/* DAILY QUEST */}
+      <DailyQuest />
+
       {/* NOTIFICATIONS / ACTION ITEMS */}
       <div className="bg-slate-900/80 backdrop-blur rounded-2xl p-4 border border-slate-700">
          <h4 className="font-display text-sm text-slate-400 mb-4 uppercase tracking-wider flex items-center gap-2">

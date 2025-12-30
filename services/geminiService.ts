@@ -51,6 +51,18 @@ export const getHistoryNugget = async (): Promise<string> => {
   }
 };
 
+export const generateSmackTalk = async (style: 'funny' | 'aggressive' | 'poetic'): Promise<string> => {
+    try {
+        const model = genAI.getGenerativeModel({ model: MASTER_MODEL });
+        const prompt = `Generate a short, playful smack talk line for a pool game (max 20 words). Style: ${style}.`;
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        return response.text()?.trim() || "Better luck next time!";
+    } catch (error) {
+        return "I'm going to run this table!";
+    }
+};
+
 export const generateCreativeAvatarPrompt = async (): Promise<string> => {
   try {
     const model = genAI.getGenerativeModel({ model: MASTER_MODEL });

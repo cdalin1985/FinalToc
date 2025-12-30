@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { User, FeedItem } from '../types';
 import { getFeed, addFeedItem } from '../services/persistenceService';
+import { generateSmackTalk } from '../services/geminiService';
 import { Button } from '../components/Button';
-import { Send, MessageSquare, Trophy, Shield, Info, Heart, Loader2 } from 'lucide-react';
+import { Send, MessageSquare, Trophy, Shield, Info, Heart, Loader2, Sparkles } from 'lucide-react';
 
 interface ActionBoardScreenProps {
   currentUser: User;
@@ -43,6 +44,11 @@ export const ActionBoardScreen: React.FC<ActionBoardScreenProps> = ({ currentUse
     await loadFeed(); // Reload
   };
 
+  const handleGenerateSmack = async () => {
+      const smack = await generateSmackTalk('funny');
+      setNewPost(smack);
+  };
+
   const getIconForType = (type: FeedItem['type']) => {
     switch (type) {
       case 'match_result': return <Trophy className="w-4 h-4 text-billiard-yellow" />;
@@ -74,7 +80,14 @@ export const ActionBoardScreen: React.FC<ActionBoardScreenProps> = ({ currentUse
                 placeholder="Talk smack or drop a comment..."
                 className="w-full bg-slate-800 border-none rounded-xl p-3 text-white placeholder:text-slate-500 text-sm focus:ring-1 focus:ring-chalk resize-none h-20"
              />
-             <div className="flex justify-end mt-2">
+             <div className="flex justify-between mt-2">
+                <button
+                    type="button"
+                    onClick={handleGenerateSmack}
+                    className="text-xs text-billiard-yellow hover:text-white flex items-center gap-1 transition-colors"
+                >
+                    <Sparkles className="w-3 h-3" /> AI Smack Talk
+                </button>
                 <Button size="sm" type="submit" disabled={!newPost.trim()} className="py-2 px-4 h-auto text-xs">
                     POST <Send className="w-3 h-3 ml-1" />
                 </Button>

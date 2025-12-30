@@ -96,6 +96,33 @@ export const CoachScreen: React.FC<CoachScreenProps> = ({ currentUser }) => {
     if (selectedBallId === id) setSelectedBallId(null);
   };
 
+  const setScenario = (scenario: 'break' | 'safety' | 'kick') => {
+      let newBalls: Ball[] = [];
+      if (scenario === 'break') {
+          newBalls = [
+              { id: 'cue', x: 25, y: 50 },
+              { id: '1', x: 70, y: 50 },
+              { id: '9', x: 74, y: 50 },
+              { id: '2', x: 72, y: 48 },
+              { id: '3', x: 72, y: 52 },
+          ];
+      } else if (scenario === 'safety') {
+          newBalls = [
+             { id: 'cue', x: 10, y: 50 },
+             { id: '1', x: 80, y: 50 },
+             { id: '2', x: 90, y: 50 }, // Blocking ball
+          ];
+      } else if (scenario === 'kick') {
+          newBalls = [
+              { id: 'cue', x: 50, y: 80 },
+              { id: '1', x: 50, y: 20 },
+              { id: '8', x: 50, y: 50 }, // Obstacle
+          ];
+      }
+      setBalls(newBalls);
+      setResponse(null);
+  };
+
   const getBallStyle = (id: string) => {
     const colors: Record<string, string> = {
       'cue': '#ffffff', '1': '#EAB308', '9': '#EAB308', '2': '#2563EB', '10': '#2563EB',
@@ -122,10 +149,11 @@ export const CoachScreen: React.FC<CoachScreenProps> = ({ currentUser }) => {
             <Lightbulb className="w-5 h-5 text-billiard-yellow" />
             PRO CADDIE
         </h2>
-        <button onClick={fetchNugget} className="text-xs bg-slate-800 px-3 py-1 rounded-full border border-slate-600 flex items-center gap-2 hover:bg-slate-700 transition-colors">
-            <BookOpen className="w-3 h-3 text-chalk" />
-            HISTORY
-        </button>
+        <div className="flex gap-2">
+            <button onClick={() => setScenario('break')} className="text-[10px] bg-slate-800 px-2 py-1 rounded border border-slate-600 hover:bg-slate-700">BREAK</button>
+            <button onClick={() => setScenario('safety')} className="text-[10px] bg-slate-800 px-2 py-1 rounded border border-slate-600 hover:bg-slate-700">SAFE</button>
+            <button onClick={() => setScenario('kick')} className="text-[10px] bg-slate-800 px-2 py-1 rounded border border-slate-600 hover:bg-slate-700">KICK</button>
+        </div>
       </div>
 
       {nugget && (

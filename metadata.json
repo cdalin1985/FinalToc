@@ -1,7 +1,8 @@
 {
-  "name": "FinalTOC",
-  "description": "The ultimate billiards competition app. Track stats, challenge rivals, and level up.",
+  "name": "TOC-League-Portal",
+  "description": "The official Top of the Capital billiards league portal. Track your standing, challenge rivals, and access AI coaching.",
   "requestFramePermissions": [
-    "microphone"
+    "microphone",
+    "camera"
   ]
 }

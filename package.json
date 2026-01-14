@@ -1,5 +1,6 @@
+
 {
-  "name": "top-of-capital",
+  "name": "toc-league-portal",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.21.0",
+    "@google/genai": "^0.38.0",
     "@supabase/supabase-js": "^2.39.3",
     "lucide-react": "^0.292.0",
     "react": "^18.2.0",

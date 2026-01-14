@@ -1,11 +1,9 @@
-
-const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+const CLOUD_NAME = process.env.VITE_CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME;
+const UPLOAD_PRESET = process.env.VITE_CLOUDINARY_UPLOAD_PRESET || process.env.CLOUDINARY_UPLOAD_PRESET;
 
 export const uploadImageToCloudinary = async (file: File): Promise<string | null> => {
   if (!CLOUD_NAME || !UPLOAD_PRESET) {
-    console.error("Cloudinary keys missing. Check .env file.");
-    alert("Image upload failed: Missing Cloudinary Configuration.");
+    console.warn("Cloudinary keys missing. Check your configuration.");
     return null;
   }
 
